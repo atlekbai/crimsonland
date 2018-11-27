@@ -13,19 +13,21 @@
 #ifndef SPRITE_HPP
 # define SPRITE_HPP
 
-# include "SDL2/SDL.h"
-# include "SDL2_image/SDL_image.h"
+# include "Vector2D.hpp"
+# include "MyFramework.hpp"
 
 class Sprite
 {
 private:
+    Vector2D    size;
     SDL_Texture *texture;
 public:
     SDL_Rect    src;
     SDL_Rect    dst;
     Sprite(SDL_Texture *tex);
     ~Sprite(void);
-    SDL_Texture *get_texture(void) const;
+    SDL_Texture *getTexture(void) const;
+    void        getSize(int &w, int &h) const;
 };
 
 #endif

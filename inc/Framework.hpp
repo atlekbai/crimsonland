@@ -23,12 +23,12 @@ Sprite*         createSprite(const char* path);
 void            drawSprite(Sprite*, int x, int y);
 void            getSpriteSize(Sprite* s, int& w, int &h);
 void            destroySprite(Sprite* s);
-void            drawTestBackground();
+void            drawTestBackground(); //x
 void            getScreenSize(int& w, int &h);
 
 // Get the number of milliseconds since library initialization.
 unsigned int    getTickCount();
-void            showCursor(bool bShow);
+void            showCursor(bool bShow);//x
 
 enum class FRKey {
 	RIGHT,
@@ -55,14 +55,19 @@ public:
 	virtual void Close() = 0;
 	
 	// return value: if true will exit the application
-	virtual bool Tick() = 0;
+	virtual bool Tick() = 0;//x
 	
 	// param: xrel, yrel: The relative motion in the X/Y direction 
 	// param: x, y : coordinate, relative to window
-	virtual void onMouseMove(int x, int y, int xrelative, int yrelative) = 0;
-	virtual void onMouseButtonClick(FRMouseButton button, bool isReleased) = 0;
-	virtual void onKeyPressed(FRKey k) = 0;
-	virtual void onKeyReleased(FRKey k) = 0;
+	virtual void onMouseMove(int x, int y, int xrelative, int yrelative) = 0;//x
+	virtual void onMouseButtonClick(FRMouseButton button, bool isReleased) = 0;//x
+	virtual void onKeyPressed(FRKey k) = 0;//x
+	virtual void onKeyReleased(FRKey k) = 0;//x
+
+	virtual void handleEvents(void) = 0;
+	virtual void update(void) = 0;
+	virtual void render(void) = 0;
+
 	virtual ~Framework() {};
 };
 

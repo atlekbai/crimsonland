@@ -17,9 +17,9 @@ void            AssetsManager::addFont(std::string id, const char *fontFile, int
     fonts.emplace(id, TTF_OpenFont(fontFile, fontSize));
 }
 
-void            AssetsManager::addTexture(std::string id, const char *textureFile)
+void            AssetsManager::addSprite(std::string id, const char *spriteFile)
 {
-    // implement texture adding
+    sprites.emplace(id, createSprite(spriteFile));
 }
 
 TTF_Font*       AssetsManager::getFont(std::string id)
@@ -27,7 +27,7 @@ TTF_Font*       AssetsManager::getFont(std::string id)
     return (fonts[id]);
 }
 
-SDL_Texture*    AssetsManager::getTexture(std::string id)
+Sprite*         AssetsManager::getSprite(std::string id)
 {
-    return (textures[id]);
+    return (sprites[id]);
 }
