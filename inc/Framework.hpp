@@ -20,7 +20,10 @@
 class Sprite;
 
 Sprite*         createSprite(const char* path);
+void            drawSprite(Sprite*);
 void            drawSprite(Sprite*, int x, int y);
+void            drawSprite(Sprite*, SDL_Rect src, SDL_Rect dst);
+void			drawSprite(Sprite* sprite, double angle);
 void            getSpriteSize(Sprite* s, int& w, int &h);
 void            destroySprite(Sprite* s);
 void            drawTestBackground(); //x
@@ -45,6 +48,14 @@ enum class FRMouseButton {
 	COUNT
 };
 
+enum group_labels : std::size_t
+{
+	group_map,
+	group_players,
+	group_colliders,
+	projectiles
+};
+
 class Framework {
 public:
 	// no function calls are available here, this function shuld only return width, height and fullscreen values
@@ -59,14 +70,12 @@ public:
 	
 	// param: xrel, yrel: The relative motion in the X/Y direction 
 	// param: x, y : coordinate, relative to window
-	virtual void onMouseMove(int x, int y, int xrelative, int yrelative) = 0;//x
-	virtual void onMouseButtonClick(FRMouseButton button, bool isReleased) = 0;//x
-	virtual void onKeyPressed(FRKey k) = 0;//x
-	virtual void onKeyReleased(FRKey k) = 0;//x
+	// virtual void onMouseMove(int x, int y, int xrelative, int yrelative) = 0;//x
+	// virtual void onMouseButtonClick(FRMouseButton button, bool isReleased) = 0;//x
+	// virtual void onKeyPressed(FRKey k) = 0;//x
+	// virtual void onKeyReleased(FRKey k) = 0;//x
 
-	virtual void handleEvents(void) = 0;
-	virtual void update(void) = 0;
-	virtual void render(void) = 0;
+	virtual void play(void) = 0;
 
 	virtual ~Framework() {};
 };

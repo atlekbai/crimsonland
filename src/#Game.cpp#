@@ -1,0 +1,7 @@
+
+#include "MyFramework.hpp"
+
+int main(int ac, char **av)
+{
+	return run(new MyFramework);
+}

@@ -51,6 +51,22 @@ void            drawSprite(Sprite* sprite, int x, int y)
     SDL_RenderCopyEx(MyFramework::renderer, sprite->getTexture(), &sprite->src, &sprite->dst, 0.0, nullptr, SDL_FLIP_NONE);
 }
 
+void            drawSprite(Sprite* sprite, SDL_Rect src, SDL_Rect dst)
+{
+    SDL_RenderCopyEx(MyFramework::renderer, sprite->getTexture(), &src, &dst, 0.0, nullptr, SDL_FLIP_NONE);
+}
+
+
+void            drawSprite(Sprite* sprite)
+{
+    SDL_RenderCopyEx(MyFramework::renderer, sprite->getTexture(), &sprite->src, &sprite->dst, 0.0, nullptr, SDL_FLIP_NONE);
+}
+
+void            drawSprite(Sprite* sprite, double angle)
+{
+    SDL_RenderCopyEx(MyFramework::renderer, sprite->getTexture(), &sprite->src, &sprite->dst, angle, nullptr, SDL_FLIP_NONE);
+}
+
 void            getSpriteSize(Sprite* s, int& w, int &h)
 {
     s->getSize(w, h);

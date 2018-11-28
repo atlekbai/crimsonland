@@ -12,8 +12,8 @@
 
 #include "MyFramework.hpp"
 #include "AssetsManager.hpp"
+#include "Game.hpp"
 
-AssetsManager   *MyFramework::assets = nullptr;
 SDL_Renderer    *MyFramework::renderer = nullptr;
 SDL_Event       MyFramework::event;
 SDL_Rect        MyFramework::camera;
@@ -33,12 +33,13 @@ void MyFramework::PreInit(int& width, int& height, bool& fullscreen)
     renderer = SDL_CreateRenderer(window, -1, 0);
     if (!renderer)
         return ;
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
     if (TTF_Init() == -1)
         return ;
     is_running = true;
     camera = {0, 0, width, height};
     timeStart = SDL_GetTicks();
+    game = new Game(this);
 }
 
 bool MyFramework::Init()
@@ -58,36 +59,28 @@ bool MyFramework::Tick()
     return (!is_running);
 }
 
-void MyFramework::handleEvents(void)
+void MyFramework::play(void)
 {
-    SDL_PollEvent(&event);
-
-    if (event.type == SDL_QUIT)
-        is_running = false;
+    game->handleEvents();
+    game->update();
+    game->render();
 }
 
-void MyFramework::update(void)
-{}
+/*
+**  Extra functions
+*/
 
-void MyFramework::render(void)
-{}
+unsigned int    getTickCount()
+{
+    return (SDL_GetTicks() - MyFramework::timeStart);
+}
 
-
-void MyFramework::onMouseMove(int x, int y, int xrelative, int yrelative)
-{}
-
-void MyFramework::onMouseButtonClick(FRMouseButton button, bool isReleased)
-{}
-
-void MyFramework::onKeyPressed(FRKey k)
-{}
-
-void MyFramework::onKeyReleased(FRKey k)
+void            showCursor(bool bShow)
 {}
 
 int     run(Framework* fr)
 {
-    const int   FPS = 60;
+    const int   FPS = 120;
     const int   frameDelay = 1000 / FPS;
     unsigned    frameStart;
     int         frameTime;
@@ -102,9 +95,7 @@ int     run(Framework* fr)
     {
         frameStart = SDL_GetTicks();
 
-        fr->handleEvents();
-        fr->update();
-        fr->render();
+        fr->play();
 
         frameTime = SDL_GetTicks() - frameStart;
         if (frameDelay > frameTime)
@@ -113,11 +104,3 @@ int     run(Framework* fr)
     fr->Close();
     return (1);
 }
-
-unsigned int    getTickCount()
-{
-    return (SDL_GetTicks() - MyFramework::timeStart);
-}
-
-void            showCursor(bool bShow)
-{}
