@@ -16,8 +16,6 @@ Sprite::Sprite(SDL_Texture *tex)
 {
     texture = tex;
     SDL_QueryTexture(texture, nullptr, nullptr, &size.x, &size.y);
-    src = {0, 0, size.x, size.y};
-    dst = {0, 0, size.x, size.y};
 }
 
 Sprite::~Sprite(void)
@@ -46,9 +44,9 @@ Sprite*         createSprite(const char* path)
 
 void            drawSprite(Sprite* sprite, int x, int y)
 {
-    sprite->dst.x = x;
-    sprite->dst.y = y;
-    SDL_RenderCopyEx(MyFramework::renderer, sprite->getTexture(), &sprite->src, &sprite->dst, 0.0, nullptr, SDL_FLIP_NONE);
+    SDL_Rect dst = {x, y, sprite->size.x, sprite->size.y};
+    SDL_Rect src = {0, 0, sprite->size.x, sprite->size.y};
+    SDL_RenderCopyEx(MyFramework::renderer, sprite->getTexture(), &src, &dst, 0.0, nullptr, SDL_FLIP_NONE);
 }
 
 void            drawSprite(Sprite* sprite, SDL_Rect src, SDL_Rect dst)
@@ -56,15 +54,9 @@ void            drawSprite(Sprite* sprite, SDL_Rect src, SDL_Rect dst)
     SDL_RenderCopyEx(MyFramework::renderer, sprite->getTexture(), &src, &dst, 0.0, nullptr, SDL_FLIP_NONE);
 }
 
-
-void            drawSprite(Sprite* sprite)
+void            drawSprite(Sprite* sprite, SDL_Rect src, SDL_Rect dst, double angle)
 {
-    SDL_RenderCopyEx(MyFramework::renderer, sprite->getTexture(), &sprite->src, &sprite->dst, 0.0, nullptr, SDL_FLIP_NONE);
-}
-
-void            drawSprite(Sprite* sprite, double angle)
-{
-    SDL_RenderCopyEx(MyFramework::renderer, sprite->getTexture(), &sprite->src, &sprite->dst, angle, nullptr, SDL_FLIP_NONE);
+    SDL_RenderCopyEx(MyFramework::renderer, sprite->getTexture(), &src, &dst, angle, nullptr, SDL_FLIP_NONE);
 }
 
 void            getSpriteSize(Sprite* s, int& w, int &h)

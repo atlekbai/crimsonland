@@ -27,8 +27,9 @@ Manager			Game::manager;
 	assets->addSprite("soldier", "assets/soldier.png");
 	assets->addSprite("tile", "assets/tile.png");
 	assets->addSprite("spider", "assets/spawn_spider.png");
+	assets->addSprite("fire", "assets/fire.png");
 
-	map = new Map("tile", 3, 32);
+	map = new Map("tile", 2, 32);
 	map->loadMap(30, 30);
 
 	player.addComponent<TransformComponent>(MyFramework::camera.w / 2, MyFramework::camera.h / 2);
@@ -38,7 +39,7 @@ Manager			Game::manager;
 	player.addGroup(group_players);
  }
 
- void Game::handleEvents(void)
+void Game::handleEvents(void)
 {
 	SDL_PollEvent(&MyFramework::event);
 
@@ -48,7 +49,7 @@ Manager			Game::manager;
 
 auto	&tiles(Game::manager.getGroup(group_map));
 auto	&players(Game::manager.getGroup(group_players));
-
+auto	&bullets(Game::manager.getGroup(group_bullets));
 
 void Game::update(void)
 {
@@ -66,6 +67,13 @@ void Game::update(void)
 		MyFramework::camera.x = MyFramework::camera.w;
 	if (MyFramework::camera.y > MyFramework::camera.h)
 		MyFramework::camera.y = MyFramework::camera.h;
+	
+	for (auto &b: bullets)
+	{
+		if (b->getComponent<TransformComponent>().position.x > 30 * 2 * 32 ||
+			b->getComponent<TransformComponent>().position.y > 30 * 2 * 32)
+			b->destroy();
+	}
 }
 
 void Game::render(void)
@@ -74,10 +82,12 @@ void Game::render(void)
 
 	for (auto &t: tiles)
 		t->draw();
-
 	for (auto &p: players)
 		p->draw();
+	for (auto &b: bullets)
+		b->draw();
 
 	SDL_RenderPresent(MyFramework::renderer);
 }
 
+// /

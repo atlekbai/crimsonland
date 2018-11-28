@@ -20,10 +20,9 @@
 class Sprite;
 
 Sprite*         createSprite(const char* path);
-void            drawSprite(Sprite*);
 void            drawSprite(Sprite*, int x, int y);
 void            drawSprite(Sprite*, SDL_Rect src, SDL_Rect dst);
-void			drawSprite(Sprite* sprite, double angle);
+void            drawSprite(Sprite* sprite, SDL_Rect src, SDL_Rect dst, double angle);
 void            getSpriteSize(Sprite* s, int& w, int &h);
 void            destroySprite(Sprite* s);
 void            drawTestBackground(); //x
@@ -53,7 +52,7 @@ enum group_labels : std::size_t
 	group_map,
 	group_players,
 	group_colliders,
-	projectiles
+	group_bullets
 };
 
 class Framework {

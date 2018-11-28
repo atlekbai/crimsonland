@@ -23,11 +23,14 @@ class SpriteComponent: public Component
 private:
     TransformComponent  *transform;
     Sprite              *sprite;
+    SDL_Rect            src;
+    SDL_Rect            dst;
 public:
     SDL_RendererFlip    sprite_flip = SDL_FLIP_NONE;
     double              angle = 0;
     SpriteComponent(void) = default;
     SpriteComponent(std::string id);
+    SpriteComponent(std::string id, double angl);
     void    setTexture(std::string id);
     void    init(void) override;
     void    update(void) override;

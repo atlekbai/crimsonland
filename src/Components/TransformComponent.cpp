@@ -11,25 +11,33 @@
 // ************************************************************************** //
 
 #include "TransformComponent.hpp"
+#include "MyFramework.hpp"
+#include "Entity.hpp"
 
 TransformComponent::TransformComponent(void) : position(Vector2D(0, 0))
 {}
 
 TransformComponent::TransformComponent(int _scale) : position(Vector2D(0, 0)), scale(_scale)
 {}
+
 TransformComponent::TransformComponent(int x, int y) : position(Vector2D(x, y))
 {}
-TransformComponent::TransformComponent(int x, int y, int w, int h, int _scale)
+
+TransformComponent::TransformComponent(int x, int y, int w, int h, int _speed, int _scale, Vector2D vel)
 {
     position = Vector2D(x, y);
     width = w;
     height = h;
     scale = _scale;
+    speed = _speed;
+    velocity = vel;
+    vel_set = true;
 }
 
 void TransformComponent::init(void)
 {
-    velocity.zero();
+    if (!vel_set)
+        velocity.zero();
 }
 
 void TransformComponent::update(void)

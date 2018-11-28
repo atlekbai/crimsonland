@@ -19,11 +19,9 @@
 class Sprite
 {
 private:
-    Vector2D    size;
     SDL_Texture *texture;
 public:
-    SDL_Rect    src;
-    SDL_Rect    dst;
+    Vector2D    size;
     Sprite(SDL_Texture *tex);
     ~Sprite(void);
     SDL_Texture *getTexture(void) const;
