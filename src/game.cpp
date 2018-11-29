@@ -20,7 +20,15 @@ Map				*Game::map = nullptr;
 Manager			Game::manager;
 
  auto			&player(Game::manager.addEntity());
+//  auto			&enemy_spawn(Game::manager.addEntity()); // implement enemy spawner
 
+void addEnemy(int x, int y)
+{
+ 	auto	&enemy(Game::manager.addEntity());
+	enemy.addComponent<TransformComponent>(x, y);
+	enemy.addComponent<SpriteComponent>("spider");
+	enemy.addGroup(group_enemies);
+}
  Game::Game(Framework *fr) : frameWork(fr)
  {
 	assets = new AssetsManager();
@@ -37,6 +45,13 @@ Manager			Game::manager;
 	player.addComponent<KeyboardController>();
 	player.addComponent<MouseController>();
 	player.addGroup(group_players);
+
+	for (int i = 0; i < 15; i++)
+	{
+		int r_x = rand() % MyFramework::camera.w;
+		int r_y = rand() % MyFramework::camera.h;
+		addEnemy(r_x, r_y);
+	}
  }
 
 void Game::handleEvents(void)
@@ -47,8 +62,17 @@ void Game::handleEvents(void)
         MyFramework::is_running = false;
 }
 
+bool	collision(TransformComponent *t1, TransformComponent *t2)
+{
+	return (t1->position.x < t2->position.x + t2->width && 
+			t1->position.x + t1->width > t2->position.x &&
+			t1->position.y < t2->position.y + t2->height && 
+			t1->position.y + t1->height > t2->position.y);
+}
+
 auto	&tiles(Game::manager.getGroup(group_map));
 auto	&players(Game::manager.getGroup(group_players));
+auto	&enemies(Game::manager.getGroup(group_enemies));
 auto	&bullets(Game::manager.getGroup(group_bullets));
 
 void Game::update(void)
@@ -73,6 +97,13 @@ void Game::update(void)
 		if (b->getComponent<TransformComponent>().position.x > 30 * 2 * 32 ||
 			b->getComponent<TransformComponent>().position.y > 30 * 2 * 32)
 			b->destroy();
+		else
+			for (auto &e: enemies)
+				if (collision(&b->getComponent<TransformComponent>(), &e->getComponent<TransformComponent>()))
+				{
+					e->destroy();
+					b->destroy();
+				}
 	}
 }
 
@@ -84,6 +115,8 @@ void Game::render(void)
 		t->draw();
 	for (auto &p: players)
 		p->draw();
+	for (auto &e: enemies)
+		e->draw();
 	for (auto &b: bullets)
 		b->draw();
 

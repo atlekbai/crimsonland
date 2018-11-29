@@ -33,7 +33,7 @@ void    MouseController::update(void)
     {
         if (MyFramework::event.button.button == SDL_BUTTON_LEFT)
         {
-            Vector2D dir = {-delta_x / 10, -delta_y / 10};
+            Vector2D dir = {- delta_x / 10, - delta_y / 10};
             auto &bullet(Game::manager.addEntity());
             bullet.addComponent<TransformComponent>(transform->position.x, transform->position.y, 32, 32, 1, 2, dir);
             bullet.addComponent<SpriteComponent>("fire", sprite->angle);

@@ -24,8 +24,8 @@ private:
     TransformComponent  *transform;
     Sprite              *sprite;
     SDL_Rect            src;
-    SDL_Rect            dst;
 public:
+    SDL_Rect            dst;
     SDL_RendererFlip    sprite_flip = SDL_FLIP_NONE;
     double              angle = 0;
     SpriteComponent(void) = default;

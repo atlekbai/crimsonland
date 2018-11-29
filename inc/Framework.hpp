@@ -51,6 +51,7 @@ enum group_labels : std::size_t
 {
 	group_map,
 	group_players,
+	group_enemies,
 	group_colliders,
 	group_bullets
 };
