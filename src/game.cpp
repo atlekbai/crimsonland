@@ -33,14 +33,13 @@ Manager			Game::manager;
 	map = new Map("tile", 2, 32);
 	map->loadMap(30, 30);
 
-	player.addComponent<TransformComponent>(MyFramework::camera.w / 2, MyFramework::camera.h / 2);
+	player.addComponent<TransformComponent>(MyFramework::camera.w / 2, MyFramework::camera.h / 2, 4);
 	player.addComponent<SpriteComponent>("soldier");
 	player.addComponent<KeyboardController>();
 	player.addComponent<MouseController>();
 	player.addGroup(group_players);
 
-
-	enemySpawner.addComponent<EnemySpawnComponent>(&player, "spider");
+	enemySpawner.addComponent<EnemySpawnComponent>(&player, "spider", map->size);
  }
 
 void Game::handleEvents(void)
@@ -90,9 +89,16 @@ void Game::update(void)
 			for (auto &e: enemies)
 				if (collision(&b->getComponent<TransformComponent>(), &e->getComponent<TransformComponent>()))
 				{
-					e->destroy();
+					enemySpawner.getComponent<EnemySpawnComponent>().killSpawn(e);
 					b->destroy();
+					break ;
 				}
+	}
+	for (auto &e: enemies)
+	{
+		if (collision(&player.getComponent<TransformComponent>(), &e->getComponent<TransformComponent>()))
+			std::cout << "collided! " << e->getComponent<TransformComponent>().position << std::endl;
+			// MyFramework::is_running = false;
 	}
 }
 
@@ -111,5 +117,3 @@ void Game::render(void)
 
 	SDL_RenderPresent(MyFramework::renderer);
 }
-
-// /

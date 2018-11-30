@@ -23,6 +23,9 @@ TransformComponent::TransformComponent(int _scale) : position(Vector2D(0, 0)), s
 TransformComponent::TransformComponent(int x, int y) : position(Vector2D(x, y))
 {}
 
+TransformComponent::TransformComponent(int x, int y, int _speed) : position(Vector2D(x, y)), speed(_speed)
+{}
+
 TransformComponent::TransformComponent(int x, int y, int w, int h, int _speed, int _scale, Vector2D vel)
 {
     position = Vector2D(x, y);
@@ -49,4 +52,10 @@ void TransformComponent::update(void)
 void TransformComponent::setAngle(double angl)
 {
     angle = angl;
+}
+
+void TransformComponent::setVelocity(Vector2D dir)
+{
+    velocity.x = dir.x;
+    velocity.y = dir.y;
 }

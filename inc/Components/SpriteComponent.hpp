@@ -22,8 +22,8 @@ class SpriteComponent: public Component
 {
 private:
     TransformComponent  *transform;
-    Sprite              *sprite;
     SDL_Rect            src;
+    Sprite              *sprite;
 public:
     SDL_Rect            dst;
     SDL_RendererFlip    sprite_flip = SDL_FLIP_NONE;

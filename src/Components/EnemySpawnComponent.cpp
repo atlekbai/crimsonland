@@ -12,11 +12,13 @@
 
 #include "EnemySpawnComponent.hpp"
 
-EnemySpawnComponent::EnemySpawnComponent(Entity *entityToAttack, std::string id)
+EnemySpawnComponent::EnemySpawnComponent(Entity *entityToAttack, std::string id, Vector2D map_size)
 {
     hero = entityToAttack;
     sprite_id = id;
-    count = 10;
+    countSpawns = 5;
+    count = countSpawns;
+    mapSize = map_size;
 }
 
 void EnemySpawnComponent::init(void)
@@ -26,12 +28,32 @@ void EnemySpawnComponent::init(void)
 
 void EnemySpawnComponent::update(void)
 {
-    // transform = &hero->getComponent<TransformComponent>();
-    // auto &spawns(Game::manager.getGroup(group_enemies));
-    // for (auto &s: spawns)
-    // {
-        
-    // }
+    TransformComponent *transformHero;
+    TransformComponent *transformSpawn;
+
+    if (count == 0)
+    {
+        countSpawns += 5;
+        count = countSpawns;
+        std::cout << countSpawns << std::endl;
+        addSpawns(count);
+        return ;
+    }
+    transformHero = &hero->getComponent<TransformComponent>();
+    auto &spawns(Game::manager.getGroup(group_enemies));
+    for (auto &s: spawns)
+    {
+        transformSpawn = &s->getComponent<TransformComponent>();
+        int delta_x = transformHero->position.x - transformSpawn->position.x;
+        int delta_y = transformHero->position.y - transformSpawn->position.y;
+        if (delta_x == 0 || delta_y == 0)
+            continue ;
+        int length = Vector2D::vectorLength(Vector2D(delta_x, delta_y));
+        double angle = (atan2(-delta_y, -delta_x) * 180.0) / 3.1416 + 90;
+        Vector2D dir = {(delta_x * 2)/ length, (delta_y * 2)/ length};
+        transformSpawn->setVelocity(dir);
+        s->getComponent<SpriteComponent>().angle = angle;
+    }
 }
 
 void EnemySpawnComponent::addSpawns(int n)
@@ -45,10 +67,11 @@ void EnemySpawnComponent::addSpawns(int n)
     int length;
 
     transform = &hero->getComponent<TransformComponent>();
-    for (int _ = 0; _ < n; _++)
+    for (int _ = 1; _ <= n; _++)
     {
-        x = rand() % 500 + MyFramework::camera.w + 20;
-        y = rand() % 500 + MyFramework::camera.h + 20;
+        int s = rand() % 2;
+        x = rand() % MyFramework::camera.w + (MyFramework::camera.x + MyFramework::camera.w) * s;
+        y = rand() % MyFramework::camera.h + (MyFramework::camera.y + MyFramework::camera.h) * (1 - s);
         delta_x = x - transform->position.x;
         delta_y = y - transform->position.y;
         angle = (atan2(delta_y, delta_x) * 180.0) / 3.1416 + 90;
@@ -61,8 +84,8 @@ void EnemySpawnComponent::addSpawns(int n)
     }
 }
 
-void EnemySpawnComponent::killSpawn(Entity &s)
+void EnemySpawnComponent::killSpawn(Entity *s)
 {
-    s.destroy();
+    s->destroy();
     count--;
 }

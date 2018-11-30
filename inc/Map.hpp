@@ -23,6 +23,7 @@ private:
     int         tile_size;
     int         scaled_size;
 public:
+    Vector2D    size;
     Map(std::string id, int _scale, int _size);
     ~Map(void);
     void loadMap(int size_x, int size_y);

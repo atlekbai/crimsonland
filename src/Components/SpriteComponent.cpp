@@ -32,6 +32,8 @@ void    SpriteComponent::setTexture(std::string id)
 void    SpriteComponent::init(void)
 {
     transform = &entity->getComponent<TransformComponent>();
+    src.x = 0;
+    src.y = 0;
     src.w = transform->width;
     src.h = transform->height;
 }

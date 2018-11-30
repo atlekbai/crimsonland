@@ -24,6 +24,9 @@
         "utility": "cpp",
         "vector": "cpp",
         "__functional_03": "cpp",
-        "functional": "cpp"
+        "functional": "cpp",
+        "__bit_reference": "cpp",
+        "chrono": "cpp",
+        "__string": "cpp"
     }
 }

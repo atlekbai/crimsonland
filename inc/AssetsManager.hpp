@@ -30,6 +30,7 @@ public:
     void            addSprite(std::string id, const char *spriteFile);
     TTF_Font*       getFont(std::string id);
     Sprite*         getSprite(std::string id);
+    ~AssetsManager();
 };
 
 #endif

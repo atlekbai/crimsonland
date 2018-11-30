@@ -21,7 +21,7 @@ OBJ_DIR	= 	./obj/
 OBJ_ECS =	./obj/ECS
 OBJ_COM =	./obj/Components
 
-FLAGS	= 	-std=c++14
+FLAGS	= 	-std=c++14 -O3
 SRC		=	main.cpp\
 			AssetsManager.cpp\
 			MyFramework.cpp\

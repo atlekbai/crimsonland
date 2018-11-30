@@ -23,13 +23,15 @@ class EnemySpawnComponent: public Component
 private:
     Entity      *hero;
     std::string sprite_id;
-    unsigned    count;
+    int         count;
+    int         countSpawns;
+    Vector2D    mapSize;
 public:
-    EnemySpawnComponent(Entity *entityToAttack, std::string id);
+    EnemySpawnComponent(Entity *entityToAttack, std::string id, Vector2D map_size);
     void init(void) override;
     void update(void) override;
     void addSpawns(int n);
-    void killSpawn(Entity &s);
+    void killSpawn(Entity *s);
 };
 
 #endif

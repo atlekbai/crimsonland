@@ -31,3 +31,9 @@ Sprite*         AssetsManager::getSprite(std::string id)
 {
     return (sprites[id]);
 }
+
+AssetsManager::~AssetsManager()
+{
+    for (auto &s: sprites)
+        destroySprite(s.second);
+}

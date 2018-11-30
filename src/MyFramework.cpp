@@ -80,7 +80,7 @@ void            showCursor(bool bShow)
 
 int     run(Framework* fr)
 {
-    const int   FPS = 120;
+    const int   FPS = 90;
     const int   frameDelay = 1000 / FPS;
     unsigned    frameStart;
     int         frameTime;

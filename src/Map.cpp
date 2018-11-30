@@ -28,6 +28,7 @@ Map::~Map(void)
 
 void Map::loadMap(int size_x, int size_y)
 {
+    size = {size_x, size_y};
     for (int y = 0; y < size_y; y++)
         for (int x = 0; x < size_x; x++)
             addTile(0, 0, x * scaled_size, y * scaled_size);
