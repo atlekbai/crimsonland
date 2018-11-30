@@ -1,18 +1,31 @@
 // ************************************************************************** //
 //                                                                            //
 //                                                        :::      ::::::::   //
-//   main.cpp                                           :+:      :+:    :+:   //
+//   FollowMouseComponent.hpp                           :+:      :+:    :+:   //
 //                                                    +:+ +:+         +:+     //
 //   By: atlekbai <atlekbai@student.unit.ua>        +#+  +:+       +#+        //
 //                                                +#+#+#+#+#+   +#+           //
-//   Created: 2018/11/27 20:19:39 by atlekbai          #+#    #+#             //
-//   Updated: 2018/11/27 20:19:39 by atlekbai         ###   ########.fr       //
+//   Created: 2018/11/30 17:39:07 by atlekbai          #+#    #+#             //
+//   Updated: 2018/11/30 17:39:07 by atlekbai         ###   ########.fr       //
 //                                                                            //
 // ************************************************************************** //
 
-#include "MyFramework.hpp"
+#ifndef FOLLOW_MOUSE_COMPONENT_HPP
+# define FOLLOW_MOUSE_COMPONENT_HPP
 
-int main(int ac, char **av)
+# include "Component.hpp"
+# include "Components.hpp"
+
+class SpriteComponent;
+
+class FollowMouseComponent: public Component
 {
-	return (run(new MyFramework));
-}
+public:
+    TransformComponent  *transform;
+    SpriteComponent     *sprite;
+
+    void    init(void) override;
+    void    update(void) override;
+};
+
+#endif

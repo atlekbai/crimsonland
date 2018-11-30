@@ -34,6 +34,7 @@ public:
 	// virtual void onKeyReleased(FRKey k);
 
 	virtual void play(void);
+	virtual void restart(void);
 
     static SDL_Renderer		*renderer;
     static SDL_Event    	event;

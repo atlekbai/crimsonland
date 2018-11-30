@@ -19,5 +19,6 @@
 # include "MouseController.hpp"
 # include "TileComponent.hpp"
 # include "EnemySpawnComponent.hpp"
+# include "FollowMouseComponent.hpp"
 
 #endif

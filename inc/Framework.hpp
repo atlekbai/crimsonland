@@ -53,7 +53,8 @@ enum group_labels : std::size_t
 	group_players,
 	group_enemies,
 	group_colliders,
-	group_bullets
+	group_bullets,
+	group_ui
 };
 
 class Framework {
@@ -76,6 +77,7 @@ public:
 	// virtual void onKeyReleased(FRKey k) = 0;//x
 
 	virtual void play(void) = 0;
+	virtual void restart(void) = 0;
 
 	virtual ~Framework() {};
 };

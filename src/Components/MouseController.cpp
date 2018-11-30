@@ -27,6 +27,7 @@ void    MouseController::update(void)
     int x;
     int y;
     SDL_GetMouseState(&x, &y);
+
     delta_x = transform->position.x - MyFramework::camera.x - x;
     delta_y = transform->position.y - MyFramework::camera.y - y;
     sprite->angle = (atan2(delta_y, delta_x) * 180.0) / 3.1416 + 90;
@@ -41,10 +42,10 @@ void    MouseController::update(void)
             bullet.addComponent<TransformComponent>(transform->position.x, transform->position.y, 32, 32, 1, 2, dir);
             bullet.addComponent<SpriteComponent>("fire", sprite->angle);
             bullet.addGroup(group_bullets);
-            bulletDelay = 20;
+            bulletDelay = 10;
         }
     }
-    else if (MyFramework::event.type == SDL_MOUSEBUTTONUP)
+    if (MyFramework::event.type == SDL_MOUSEBUTTONUP)
         if (MyFramework::event.button.button == SDL_BUTTON_LEFT)
             bulletDelay = 0;
 

@@ -48,6 +48,6 @@ void    KeyboardController::update(void)
         else if (code == SDLK_d)
             transform->velocity.x = 0;
         else if (code == SDLK_ESCAPE)
-            MyFramework::is_running = false;
+            exit(1);
     }
 }

@@ -19,16 +19,18 @@ AssetsManager	*Game::assets = nullptr;
 Map				*Game::map = nullptr;
 Manager			Game::manager;
 
+auto			&reticle(Game::manager.addEntity());
  auto			&player(Game::manager.addEntity());
- auto			&enemySpawner(Game::manager.addEntity()); // implement enemy spawner
+ auto			&enemySpawner(Game::manager.addEntity());
 
- Game::Game(Framework *fr) : frameWork(fr)
- {
+Game::Game(Framework *fr) : frameWork(fr)
+{
 	assets = new AssetsManager();
 	assets->addSprite("soldier", "assets/soldier.png");
 	assets->addSprite("tile", "assets/tile.png");
 	assets->addSprite("spider", "assets/spawn_spider.png");
 	assets->addSprite("fire", "assets/fire.png");
+	assets->addSprite("reticle", "assets/reticle.png");
 
 	map = new Map("tile", 2, 32);
 	map->loadMap(30, 30);
@@ -39,6 +41,11 @@ Manager			Game::manager;
 	player.addComponent<MouseController>();
 	player.addGroup(group_players);
 
+	reticle.addComponent<TransformComponent>();
+	reticle.addComponent<SpriteComponent>("reticle");
+	reticle.addComponent<FollowMouseComponent>();
+	reticle.addGroup(group_ui);
+	
 	enemySpawner.addComponent<EnemySpawnComponent>(&player, "spider", map->size);
  }
 
@@ -47,7 +54,7 @@ void Game::handleEvents(void)
 	SDL_PollEvent(&MyFramework::event);
 
     if (MyFramework::event.type == SDL_QUIT)
-        MyFramework::is_running = false;
+        exit(1);
 }
 
 bool	collision(TransformComponent *t1, TransformComponent *t2)
@@ -62,6 +69,7 @@ auto	&tiles(Game::manager.getGroup(group_map));
 auto	&players(Game::manager.getGroup(group_players));
 auto	&enemies(Game::manager.getGroup(group_enemies));
 auto	&bullets(Game::manager.getGroup(group_bullets));
+auto	&uis(Game::manager.getGroup(group_ui));
 
 void Game::update(void)
 {
@@ -116,6 +124,8 @@ void Game::render(void)
 		e->draw();
 	for (auto &b: bullets)
 		b->draw();
+	for (auto &u: uis)
+		u->draw();
 
 	SDL_RenderPresent(MyFramework::renderer);
 }

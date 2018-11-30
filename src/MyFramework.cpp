@@ -47,6 +47,13 @@ bool MyFramework::Init()
     return (is_running);
 }
 
+void MyFramework::restart()
+{
+    delete game;
+    game = new Game(this);
+    is_running = true;
+}
+
 void MyFramework::Close()
 {
     SDL_DestroyWindow(window);
@@ -91,16 +98,20 @@ int     run(Framework* fr)
     fr->PreInit(width, height, full);
     if (!fr->Init())
         return (1);
-    while (!fr->Tick())
-    {
-        frameStart = SDL_GetTicks();
+    // while (1)
+    // {
+        while (!fr->Tick())
+        {
+            frameStart = SDL_GetTicks();
 
-        fr->play();
+            fr->play();
 
-        frameTime = SDL_GetTicks() - frameStart;
-        if (frameDelay > frameTime)
-            SDL_Delay(frameDelay - frameTime);
-    }
+            frameTime = SDL_GetTicks() - frameStart;
+            if (frameDelay > frameTime)
+                SDL_Delay(frameDelay - frameTime);
+        }
+        // fr->restart();
+    // }
     fr->Close();
     return (1);
 }
