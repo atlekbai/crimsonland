@@ -97,8 +97,10 @@ void Game::update(void)
 	for (auto &e: enemies)
 	{
 		if (collision(&player.getComponent<TransformComponent>(), &e->getComponent<TransformComponent>()))
-			std::cout << "collided! " << e->getComponent<TransformComponent>().position << std::endl;
-			// MyFramework::is_running = false;
+		{
+			MyFramework::is_running = false;
+			std::cout << "You dead" << std::endl;
+		}
 	}
 }
 
