@@ -45,3 +45,8 @@ void TransformComponent::update(void)
     position.x += velocity.x * speed;
     position.y += velocity.y * speed;
 }
+
+void TransformComponent::setAngle(double angl)
+{
+    angle = angl;
+}

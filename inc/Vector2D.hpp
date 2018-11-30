@@ -35,6 +35,8 @@ public:
 	Vector2D &operator-=(const Vector2D &v1);
 	Vector2D &operator/=(const Vector2D &v1);
 	Vector2D &operator*=(const Vector2D &v1);
+	static int vectorLength(Vector2D vec);
+	static double getAngle(Vector2D vec1, Vector2D vec2);
 };
 
 Vector2D &operator+(Vector2D &v1, Vector2D &v2);

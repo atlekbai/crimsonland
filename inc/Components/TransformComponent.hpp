@@ -33,6 +33,7 @@ public:
     TransformComponent(int x, int y);
     TransformComponent(int x, int y, int w, int h, int _speed, int _scale, Vector2D vel);
 
+    void setAngle(double angl);
     void init(void) override;
     void update(void) override;
 };

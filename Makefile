@@ -35,7 +35,8 @@ SRC		=	main.cpp\
 			Components/SpriteComponent.cpp\
 			Components/TileComponent.cpp\
 			Components/KeyboardController.cpp\
-			Components/MouseController.cpp
+			Components/MouseController.cpp\
+			Components/EnemySpawnComponent.cpp
 OBJ		=	$(addprefix $(OBJ_DIR), $(SRC:.cpp=.o))
 INC		=	-I $(INC_DIR) -I $(INC_ECS) -I $(INC_COM)
 

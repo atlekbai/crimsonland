@@ -18,5 +18,6 @@
 # include "KeyboardController.hpp"
 # include "MouseController.hpp"
 # include "TileComponent.hpp"
+# include "EnemySpawnComponent.hpp"
 
 #endif

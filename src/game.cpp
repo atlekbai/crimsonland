@@ -20,15 +20,8 @@ Map				*Game::map = nullptr;
 Manager			Game::manager;
 
  auto			&player(Game::manager.addEntity());
-//  auto			&enemy_spawn(Game::manager.addEntity()); // implement enemy spawner
+ auto			&enemySpawner(Game::manager.addEntity()); // implement enemy spawner
 
-void addEnemy(int x, int y)
-{
- 	auto	&enemy(Game::manager.addEntity());
-	enemy.addComponent<TransformComponent>(x, y);
-	enemy.addComponent<SpriteComponent>("spider");
-	enemy.addGroup(group_enemies);
-}
  Game::Game(Framework *fr) : frameWork(fr)
  {
 	assets = new AssetsManager();
@@ -46,12 +39,8 @@ void addEnemy(int x, int y)
 	player.addComponent<MouseController>();
 	player.addGroup(group_players);
 
-	for (int i = 0; i < 15; i++)
-	{
-		int r_x = rand() % MyFramework::camera.w;
-		int r_y = rand() % MyFramework::camera.h;
-		addEnemy(r_x, r_y);
-	}
+
+	enemySpawner.addComponent<EnemySpawnComponent>(&player, "spider");
  }
 
 void Game::handleEvents(void)
