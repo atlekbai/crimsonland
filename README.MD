@@ -1,4 +1,4 @@
-# 2d shooter
+# 2D Shooter
 
 This repository contains my alpha implementation of 2d game ***"Crimsonland"*** on SDL2.
 
@@ -10,7 +10,7 @@ Features:
 ### What is used?
 
 * SDL2 - Graphics library
-* C++11
+* C++14
 
 ### Set Up and Play
 
